@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
 <script>
   var points = [];
   var plotWidth = 80;
@@ -57,7 +81,8 @@
 </head>
 <body>
   Number of points: <input type="number" id="samples" value="1000">
-  <button onclick="update()">Update</button>
+  <button class="button" onclick="update()">Update</button>
   <pre id="sphere"></pre>
+  <p>Here is the sphere in its true 3D glory: <a href="https://openprocessing.org/sketch/41142" target="_blank">https://openprocessing.org/sketch/41142</a></p>
 </body>
 </html>
