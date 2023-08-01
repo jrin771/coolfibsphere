@@ -5,15 +5,20 @@
   var points = [];
   var plotWidth = 80;
   var plotHeight = 40;
-  var num_samples = 1000;
   var intervalId = null;
   
-  function fibonacci_sphere() {
+  function fibonacci_sphere(samples) {
     var phi = Math.PI * (3. - Math.sqrt(5.));  // golden angle in radians
     var index = 0;
 
+    // Clear existing interval if it exists
+    if (intervalId) {
+        clearInterval(intervalId);
+        points = [];
+    }
+
     intervalId = setInterval(() => {
-        var y = 1 - (index / parseFloat(num_samples - 1)) * 2;  // y goes from 1 to -1
+        var y = 1 - (index / parseFloat(samples - 1)) * 2;  // y goes from 1 to -1
         var radius = Math.sqrt(1 - y*y);  // radius at y
 
         var theta = phi * index;  // golden angle increment
@@ -25,10 +30,10 @@
         document.getElementById('sphere').innerText = plot_ascii_sphere(points, plotWidth, plotHeight);
 
         index++;
-        if (index === num_samples) {
+        if (index === samples) {
             clearInterval(intervalId);
         }
-    }, 5000 / num_samples);  // adjust the interval so the total duration is 5 seconds
+    }, 5000 / samples);  // adjust the interval so the total duration is 5 seconds
   }
 
   function plot_ascii_sphere(points, width=80, height=40) {
@@ -45,11 +50,14 @@
   }
 
   function update() {
-    fibonacci_sphere();
+    var samples = parseInt(document.getElementById('samples').value) || 1000;
+    fibonacci_sphere(samples);
   }
 </script>
 </head>
-<body onload="update()">
+<body>
+  Number of points: <input type="number" id="samples" value="1000">
+  <button onclick="update()">Update</button>
   <pre id="sphere"></pre>
 </body>
 </html>
