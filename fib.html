@@ -2,25 +2,33 @@
 <html>
 <head>
 <script>
-  var points;
+  var points = [];
   var plotWidth = 80;
   var plotHeight = 40;
+  var num_samples = 1000;
+  var intervalId = null;
   
-  function fibonacci_sphere(samples=1000) {
-    points = [];
+  function fibonacci_sphere() {
     var phi = Math.PI * (3. - Math.sqrt(5.));  // golden angle in radians
+    var index = 0;
 
-    for (var i = 0; i < samples; i++) {
-      var y = 1 - (i / parseFloat(samples - 1)) * 2;  // y goes from 1 to -1
-      var radius = Math.sqrt(1 - y*y);  // radius at y
+    intervalId = setInterval(() => {
+        var y = 1 - (index / parseFloat(num_samples - 1)) * 2;  // y goes from 1 to -1
+        var radius = Math.sqrt(1 - y*y);  // radius at y
 
-      var theta = phi * i;  // golden angle increment
+        var theta = phi * index;  // golden angle increment
 
-      var x = Math.cos(theta) * radius;
-      var z = Math.sin(theta) * radius;
+        var x = Math.cos(theta) * radius;
+        var z = Math.sin(theta) * radius;
 
-      points.push([x, y, z]);
-    }
+        points.push([x, y, z]);
+        document.getElementById('sphere').innerText = plot_ascii_sphere(points, plotWidth, plotHeight);
+
+        index++;
+        if (index === num_samples) {
+            clearInterval(intervalId);
+        }
+    }, 5000 / num_samples);  // adjust the interval so the total duration is 5 seconds
   }
 
   function plot_ascii_sphere(points, width=80, height=40) {
@@ -37,8 +45,7 @@
   }
 
   function update() {
-    fibonacci_sphere(1000);
-    document.getElementById('sphere').innerText = plot_ascii_sphere(points, plotWidth, plotHeight);
+    fibonacci_sphere();
   }
 </script>
 </head>
