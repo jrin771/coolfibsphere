@@ -80,9 +80,11 @@
 </script>
 </head>
 <body>
-  Number of points: <input type="number" id="samples" value="1000">
+  How many points do you want rendered (optimal is around 1000 I've found): <input type="number" id="samples" value="1000">
   <button class="button" onclick="update()">Update</button>
   <pre id="sphere"></pre>
-  <p>Here is the sphere in its true 3D glory: <a href="https://openprocessing.org/sketch/41142" target="_blank">https://openprocessing.org/sketch/41142</a></p>
+  <p>A fibonnacci sphere is a put n-points on a sphere, so that the minimum distance between any two points is as large as possible. </p>  
+  <p>For those who know their maths, this is different from n points being randomly distributed on a sphere. If the points were randomly selected from a gaussian (which is a normal, or "bell-curve" shaped) distribution, then that doesn't guarantee they'll be uniform and symmetric and pretty, just that they'll be randomly distributed around the sphere.  </p>
+  <p>If you want to read the original arxiv paper, <a href="https://arxiv.org/pdf/0912.4540.pdf" target="_blank">click this link</a>.</p>
 </body>
 </html>
