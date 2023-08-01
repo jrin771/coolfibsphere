@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  var points;
+  var plotWidth = 80;
+  var plotHeight = 40;
+  
+  function fibonacci_sphere(samples=1000) {
+    points = [];
+    var phi = Math.PI * (3. - Math.sqrt(5.));  // golden angle in radians
+
+    for (var i = 0; i < samples; i++) {
+      var y = 1 - (i / parseFloat(samples - 1)) * 2;  // y goes from 1 to -1
+      var radius = Math.sqrt(1 - y*y);  // radius at y
+
+      var theta = phi * i;  // golden angle increment
+
+      var x = Math.cos(theta) * radius;
+      var z = Math.sin(theta) * radius;
+
+      points.push([x, y, z]);
+    }
+  }
+
+  function plot_ascii_sphere(points, width=80, height=40) {
+    var ascii_art = Array(height).fill().map(() => Array(width).fill(' '));  // initialize blank ascii canvas
+    var max_x = Math.max(...points.map(pt => pt[0]));
+    var max_y = Math.max(...points.map(pt => pt[1]));
+    points.forEach(function(pt) {
+      var x = pt[0], y = pt[1];
+      var ascii_x = Math.floor((x / max_x) * (width - 1) / 2 + width / 2);
+      var ascii_y = Math.floor((y / max_y) * (height - 1) / 2 + height / 2);
+      ascii_art[ascii_y][ascii_x] = '*';
+    });
+    return ascii_art.map(row => row.join('')).join('\n');
+  }
+
+  function update() {
+    fibonacci_sphere(1000);
+    document.getElementById('sphere').innerText = plot_ascii_sphere(points, plotWidth, plotHeight);
+  }
+</script>
+</head>
+<body onload="update()">
+  <pre id="sphere"></pre>
+</body>
+</html>
